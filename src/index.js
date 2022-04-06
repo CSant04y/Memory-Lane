@@ -1,84 +1,100 @@
-// import { initializeApp } from 'firbase/app';
-// const firebaseConfig = {
-//     apiKey: "AIzaSyDd1DnqW4-EGAMMAKmyWERnYDwOKJLgDhg",
-//     authDomain: "memory-lane-f1f8b.firebaseapp.com",
-//     projectId: "memory-lane-f1f8b",
-//     storageBucket: "memory-lane-f1f8b.appspot.com",
-//     messagingSenderId: "82707208352",
-//     appId: "1:82707208352:web:138abe3484b4c1c3c391c5",
-//     measurementId: "G-XH51JXWTVX"
-//   };
-
-// const firbaseApp = initializeApp(firebaseConfig);
-
 import 'dotenv/config';
-import express from "express";
-import cors from 'cors';
-import { v4 as uuidv4 } from 'uuid';
+// const express = require('express');
+import express from 'express';
 
-// Middleware to allow cross origin recource sharing
+import cors from 'cors';
+import { port } from './config.js'
+import router from './routes/userRoutes.js';
+import bodyParser from 'body-parser';
+
+console.log(port);
 const app = express();
 
+// Middlewares
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use('/api', router);
+// app.use((req, res, next) => {
+//   req.context = {
+//     models,
+//     me: models.users[1],
+//   }
+//   next();
+// });
 
-let users = {
-  1: {
-    id: '1',
-    username: 'Robin Wieruch',
-  },
-  2: {
-    id: '2',
-    username: 'Dave Davids',
-  },
-};
+// app.use((req, res, next) => {
+//   req.me = users[1];
+//   next();
+// });
+// // const date = Date.parse(req.body.date);
+// // const count = Number(req.body.count);
 
-let messages = {
-  1: {
-    id: '1',
-    text: 'Hello World',
-    userId: '1',
-  },
-  2: {
-    id: '2',
-    text: 'By World',
-    userId: '2',
-  },
-};
+// // GET METHODS
+// app.get('/users', (req, res) => {
+//   return res.send(Object.values(req.context.models.users));
+// });
 
-// GET METHODS
-app.get('/users', (req, res) => {
-  return res.send(Object.values(users));
-});
+// app.get('/users/:userId', (req, res) => {
+//   return res.send(req.context.models.users[req.params.userId]);
+// });
 
-app.get('/users/:userId', (req, res) => {
-  return res.send(users[req.params.userId]);
-});
+// app.get('/messages', (req, res) => {
+//   return res.send(Object.values(req.context.models.messages));
+// });
 
-app.get('/messages', (req, res) => {
-  return res.send(Object.values(messages));
-});
+// app.get('/messages/:messageId', (req, res) => {
+//   return res.send(req.context.models.messages[req.params.messageId]);
+// });
 
-app.get('/messages/:messageId', (req, res) => {
-  return res.send(messages[req.params.messageId]);
-});
+// app.get('/session', (req, res) => {
+//   return res.send(req.context.models.users[req.context.me.id]);
+// });
 
-// POST METHODS
-app.post('/users', (req, res) => {
-  return res.send('POST HTTP method on user resource');
-});
+// // POST METHODS
+// app.post('/users', (req, res) => {
+//   return res.send('POST HTTP method on user resource');
+// });
 
-app.put('/users/:userId', (req, res) => {
-  return res.send(
-    `PUT HTTP method on user/${req.params.userId} resource`,
-  );
-});
-// DELETE METHODS
-app.delete('/users/:userId', (req, res) => {
-  return res.send(
-    `DELETE HTTP method on user/${req.params.userId} resource`,
-  );
-});
+// app.put('/users/:userId', (req, res) => {
+//   return res.send(
+//     `PUT HTTP method on user/${req.params.userId} resource`,
+//   );
+// });
 
-app.listen(process.env.PORT, () =>
-  console.log(`App listening on port ${process.env.PORT}!`),
+// app.post('/messages', (req, res) => {
+//   const id = uuidv4();
+
+//   const message = {
+//     id,
+//     text: req.body.text,
+//     userId: req.context.me.id,
+//   };
+
+//   req.context.models.messages[id] = message;
+
+//   return res.send(message);
+// });
+
+// // DELETE METHODS
+// app.delete('/users/:userId', (req, res) => {
+//   return res.send(
+//     `DELETE HTTP method on user/${req.params.userId} resource`,
+//   );
+// });
+
+// app.delete('/messages/:messageId', (req, res) => {
+//   const {
+//     [req.params.messageId]: message,
+//     ...otherMessages
+//   } = req.context.models.messages;
+
+//   req.context.models.messages = otherMessages;
+
+//   return res.send(message);
+// })
+
+app.listen(port, () =>
+  console.log(`App listening on port ${port}!`),
 );
