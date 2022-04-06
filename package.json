@@ -1,9 +1,8 @@
 {
-  "type": "module",
-  "name": "",
+  "name": "Memory-Lane",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --exec babel-node src/index.js"
@@ -21,14 +20,16 @@
     "Aleia Devore"
   ],
   "dependencies": {
+    "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "firebase": "^9.6.10",
-    "uuid": "^8.3.2"
+    "firebase-admin": "^10.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",
+    "@babel/helper-compilation-targets": "^7.17.7",
     "@babel/node": "^7.16.8",
     "@babel/preset-env": "^7.16.11",
     "nodemon": "^2.0.15",
